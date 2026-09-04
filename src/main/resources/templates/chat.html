@@ -1,10 +1,801 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Nexor</title>
 </head>
-<body>
-$END$
+
+<body style="
+    margin:0;
+    padding:0;
+    background:#0b141a;
+    color:#e9edef;
+    display:flex;
+    flex-direction:column;
+    height:100vh;
+    overflow:hidden;
+    font-family:Arial,sans-serif;
+">
+
+<nav style="
+    background:#202c33;
+    padding:12px 20px;
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    flex-shrink:0;
+">
+
+    <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+
+
+            <td align="left">
+
+                <a th:href="@{/}"
+                   style="
+                       font-size:26px;
+                       font-weight:700;
+                       color:white;
+                       text-decoration:none;
+                   ">
+                    Ne<span style="color:#22c55e;">xor</span>
+                </a>
+
+            </td>
+
+
+            <td align="right">
+
+                <span th:if="${currentUser != null and currentUser.role == 'ROLE_USER'}"
+                      style="display:inline-block;">
+
+                    <a th:href="@{/add}"
+                       style="
+       width: 40px;
+       height: 40px;
+       border-radius: 8px;
+       background: #2a3942;
+       color: #00a884;
+       font-weight: bold;
+       cursor: pointer;
+       margin-top: auto;
+
+       display: inline-flex;
+       align-items: center;
+       justify-content: center;
+
+       text-decoration: none;
+       box-sizing: border-box;
+       flex-shrink: 0;
+   ">
+    ➕
+</a>
+
+                    &#8202;
+
+                    <a th:href="@{/}"
+                       style="
+       width: 40px;
+       height: 40px;
+       border-radius: 8px;
+       background: #2a3942;
+       color: #00a884;
+       font-weight: bold;
+       cursor: pointer;
+       margin-top: auto;
+
+       display: inline-flex;
+       align-items: center;
+       justify-content: center;
+
+       text-decoration: none;
+       box-sizing: border-box;
+       flex-shrink: 0;
+   ">
+    💬
+</a>
+
+                    &#8202;
+
+                    <a th:href="@{/settings}"
+                       style="
+       width: 40px;
+       height: 40px;
+       border-radius: 8px;
+       background: #2a3942;
+       color: #00a884;
+       font-weight: bold;
+       cursor: pointer;
+       margin-top: auto;
+
+       display: inline-flex;
+       align-items: center;
+       justify-content: center;
+
+       text-decoration: none;
+       box-sizing: border-box;
+       flex-shrink: 0;
+   ">
+    ⚙️
+</a>
+
+                    &#8202;
+
+                    <span style="
+                        color:#52636d;
+                        position:relative;
+                        top:-2px;
+                    ">
+                        |
+                    </span>
+
+                    &#8202;
+
+                    <a th:href="@{/users/{id}/profile(id=${currentUser.id})}"
+                       style="
+       width: 40px;
+       height: 40px;
+       border-radius: 8px;
+       background: #2a3942;
+       color: #00a884;
+       font-weight: bold;
+       cursor: pointer;
+       margin-top: auto;
+
+       display: inline-flex;
+       align-items: center;
+       justify-content: center;
+
+       text-decoration: none;
+       box-sizing: border-box;
+       flex-shrink: 0;
+   ">
+    👤
+</a>
+
+                </span>
+
+            </td>
+
+
+            <td align="right">
+
+                <span th:if="${currentAdmin != null}"
+                      style="display:inline-block;">
+
+                    <form th:action="@{/logout}"
+                          method="post"
+                          style="
+                              margin:0;
+                              padding:0;
+                          ">
+
+                        <button type="submit"
+                                style="
+                                    background:#e53935;
+                                    color:white;
+                                    border:none;
+                                    height:32px;
+                                    padding:0 28px;
+                                    border-radius:6px;
+                                    font-weight:600;
+                                    cursor:pointer;
+                                    font-size:15px;
+                                ">
+                            Logout
+                        </button>
+
+                    </form>
+
+                </span>
+
+            </td>
+
+        </tr>
+    </table>
+
+</nav>
+
+<div style="
+    flex:1;
+    min-height:0;
+    display:flex;
+    overflow:hidden;
+">
+
+    <div style="
+        width:320px;
+        flex-shrink:0;
+        background:#111b21;
+        display:flex;
+        flex-direction:column;
+        border-right:1px solid #222e35;
+    ">
+
+
+        <a th:each="c : ${chats}"
+           th:href="@{/chats/{id}(id=${c.id})}"
+
+           style="
+       display:flex;
+       padding:12px 15px;
+       gap:12px;
+       cursor:pointer;
+       align-items:center;
+       border-bottom:1px solid #222e35;
+       background:#2a3942;
+       text-decoration:none;
+       color:white;
+   ">
+
+            <div style="
+        width:45px;
+        height:45px;
+        border-radius:50%;
+        background:#00a884;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-weight:bold;
+        color:#111b21;
+        flex-shrink:0;
+    ">
+
+                <span th:text="${c.name.charAt(0)}"></span>
+
+            </div>
+
+
+            <div style="
+        flex:1;
+        min-width:0;
+    ">
+
+                <div style="
+            display:flex;
+            justify-content:space-between;
+            margin-bottom:4px;
+        ">
+
+            <span th:text="${c.name}"
+                  style="
+                      font-weight:600;
+                      font-size:0.95rem;
+                  ">
+            </span>
+
+                    <span style="
+                font-size:0.75rem;
+                color:#8696a0;
+            ">
+                22:41
+            </span>
+
+                </div>
+
+
+                <div style="
+            font-size:0.85rem;
+            color:#8696a0;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+        ">
+                    Last message
+                </div>
+
+            </div>
+
+        </a>
+
+    </div>
+
+    <div style="
+        flex:1;
+        min-width:0;
+        display:flex;
+        flex-direction:column;
+        background:#0b141a;
+    ">
+
+        <div style="
+            height:60px;
+            flex-shrink:0;
+            background:#202c33;
+            display:flex;
+            align-items:center;
+            padding:0 20px;
+            gap:15px;
+        ">
+
+
+
+            <div style="
+                width:40px;
+                height:40px;
+                flex-shrink:0;
+                border-radius:50%;
+                background:#00a884;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                font-weight:bold;
+                color:#111b21;
+            ">
+                T
+            </div>
+
+            <div>
+
+                <div style="
+                    font-weight:600;
+                    font-size:17px;
+                ">
+                    Test Chat
+                </div>
+
+                <div style="
+                    font-size:12px;
+                    color:#8696a0;
+                ">
+                    Chat
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="chat-window"
+             style="
+         flex:1;
+         padding:20px;
+         overflow-y:auto;
+         display:flex;
+         flex-direction:column;
+         position:relative;
+         isolation:isolate;
+     ">
+
+            <div style="
+        position:absolute;
+        inset:0;
+        overflow:hidden;
+        pointer-events:none;
+        z-index:0;
+    ">
+
+        <span style="position:absolute;top:7%;left:12%;color:#8696a0;opacity:0.18;font-size:30px;white-space:nowrap;">
+    ꒰ ˶• ༝ •˶꒱
+</span>
+
+                <span style="position:absolute;top:15%;left:43%;color:#8696a0;opacity:0.18;font-size:25px;white-space:nowrap;">
+    ⎛⎝( ` ᢍ ´ )⎠⎞ᵐᵘʰᵃʰᵃ
+</span>
+
+                <span style="position:absolute;top:8%;left:76%;color:#8696a0;opacity:0.18;font-size:28px;white-space:nowrap;">
+    (๑ↀᆺↀ๑)
+</span>
+
+
+                <span style="position:absolute;top:22%;left:68%;color:#8696a0;opacity:0.18;font-size:25px;white-space:nowrap;">
+    ✧･ﾟ: *✧･ﾟ:*
+</span>
+
+                <span style="position:absolute;top:29%;left:20%;color:#8696a0;opacity:0.18;font-size:26px;white-space:nowrap;">
+    ୧⍤⃝💐
+</span>
+
+                <span style="position:absolute;top:32%;left:78%;color:#8696a0;opacity:0.18;font-size:22px;white-space:nowrap;">
+    ˗ˏˋ ꒰ ✉︎ ꒱ ˎˊ˗
+</span>
+
+
+                <span style="position:absolute;top:40%;left:43%;color:#8696a0;opacity:0.18;font-size:24px;white-space:nowrap;">
+    ｡ﾟ•┈୨♡୧┈•ﾟ｡
+</span>
+
+                <span style="position:absolute;top:48%;left:70%;color:#8696a0;opacity:0.18;font-size:23px;white-space:nowrap;">
+    ♥️⃢🥰⃢♥️⃢♥️⃢𓍯
+</span>
+
+                <span style="position:absolute;top:50%;left:10%;color:#8696a0;opacity:0.18;font-size:24px;white-space:nowrap;">
+    ִֶָ. ..𓂃 ࣪ ִֶָ🪽་༘࿐
+</span>
+
+
+                <span style="position:absolute;top:61%;left:31%;color:#8696a0;opacity:0.18;font-size:23px;white-space:nowrap;">
+    ✩♬ ₊.🎧⋆☾⋆⁺₊✧
+</span>
+
+                <span style="position:absolute;top:68%;left:76%;color:#8696a0;opacity:0.18;font-size:17px;white-space:nowrap;">
+    𓂃˖˳·˖ ִֶָ ⋆🌷͙⋆ ִֶָ˖·˳˖𓂃 ִֶָ
+</span>
+
+
+                <span style="position:absolute;top:72%;left:50%;color:#8696a0;opacity:0.18;font-size:23px;white-space:nowrap;">
+    ⋆｡𖦹°⭒˚｡⋆⋆｡𖦹°⭒˚｡⋆
+</span>
+
+                <span style="position:absolute;top:76%;left:14%;color:#8696a0;opacity:0.18;font-size:21px;white-space:nowrap;">
+    ִֶָ𓂃 ࣪ ִֶָ🦢་༘࿐
+</span>
+
+                <span style="position:absolute;top:84%;left:38%;color:#8696a0;opacity:0.18;font-size:18px;white-space:nowrap;">
+    ⊹₊˚‧︵‿₊୨ᰔ୧₊‿︵‧˚₊⊹
+</span>
+
+
+                <span style="position:absolute;top:88%;left:72%;color:#8696a0;opacity:0.18;font-size:19px;white-space:nowrap;">
+    ༘⋆♡⸝⸝💌⊹。°˖➴
+</span>
+
+                <span style="position:absolute;top:91%;left:8%;color:#8696a0;opacity:0.18;font-size:18px;white-space:nowrap;">
+    ⊹ ࣪ ﹏𓊝﹏𓂁﹏⊹ ࣪ ˖
+</span>
+
+            </div>
+
+            <div id="messages-container"
+                 style="
+             position:relative;
+             z-index:1;
+             width:100%;
+             display:flex;
+             flex-direction:column;
+             gap:10px;
+             margin-top:auto;
+             flex-shrink:0;
+         ">
+            </div>
+
+        </div>
+
+        <div style="
+            min-height:60px;
+            background:#202c33;
+            padding:10px 15px;
+            display:flex;
+            align-items:center;
+            gap:10px;
+            flex-shrink:0;
+        ">
+
+            <div style="
+                display:flex;
+                gap:8px;
+            ">
+
+                <button style="
+                    background:#2a3942;
+                    border:none;
+                    color:#aebac1;
+                    font-size:0.85rem;
+                    font-weight:bold;
+                    cursor:pointer;
+                    padding:6px 10px;
+                    border-radius:15px;
+                ">
+                    🏞️
+                </button>
+
+                <button style="
+                    background:#2a3942;
+                    border:none;
+                    color:#aebac1;
+                    font-size:0.85rem;
+                    font-weight:bold;
+                    cursor:pointer;
+                    padding:6px 10px;
+                    border-radius:15px;
+                ">
+                    GIF
+                </button>
+
+                <button style="
+                    background:#2a3942;
+                    border:none;
+                    color:#00a884;
+                    font-size:0.85rem;
+                    font-weight:bold;
+                    cursor:pointer;
+                    padding:6px 10px;
+                    border-radius:15px;
+                ">
+                    🎙️
+                </button>
+
+            </div>
+
+            <input id="message-input"
+                   type="text"
+                   placeholder="Write a message..."
+                   style="
+                       flex:1;
+                       background:#2a3942;
+                       border:1px solid #3b4a54;
+                       border-radius:8px;
+                       padding:10px 15px;
+                       color:#fff;
+                       font-size:0.95rem;
+                       outline:none;
+                       box-sizing:border-box;
+                   ">
+
+            <button id="send-btn"
+                    style="
+                        background:#00a884;
+                        color:#111b21;
+                        border:none;
+                        width:40px;
+                        height:40px;
+                        flex-shrink:0;
+                        border-radius:50%;
+                        font-weight:bold;
+                        cursor:pointer;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                    ">
+                ➜
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.1.1/bundles/stomp.umd.min.js"></script>
+
+<script th:inline="javascript">
+
+    const chatId = /*[[${id}]]*/ 1;
+
+    const currentUserId = /*[[${currentUser.id}]]*/ null;
+
+</script>
+
+<script>
+
+    const client = new StompJs.Client({
+        brokerURL: 'ws://localhost:8080/ws'
+    });
+
+    const chatWindow = document.getElementById('chat-window');
+    const messagesContainer = document.getElementById('messages-container');
+    const messageInput = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-btn');
+
+
+    client.onConnect = function () {
+
+        console.log('WebSocket connected');
+
+        client.subscribe('/topic/chat/' + chatId, function (message) {
+
+            const data = JSON.parse(message.body);
+
+            console.log('WebSocket message:', data);
+
+            addMessage(
+                data.senderId,
+                data.senderName,
+                data.text,
+                data.createdAt
+            );
+
+        });
+
+    };
+
+
+    client.onStompError = function (frame) {
+
+        console.error('STOMP error:', frame);
+
+    };
+
+
+    client.activate();
+
+
+    sendButton.addEventListener('click', sendMessage);
+
+
+    messageInput.addEventListener('keydown', function (event) {
+
+        if (event.key === 'Enter') {
+
+            event.preventDefault();
+
+            sendMessage();
+
+        }
+
+    });
+
+
+    function sendMessage() {
+
+        const text = messageInput.value.trim();
+
+        if (text === '') {
+            return;
+        }
+
+        client.publish({
+
+            destination: '/app/chat/' + chatId,
+
+            body: JSON.stringify({
+                text: text
+            })
+
+        });
+
+        messageInput.value = '';
+
+    }
+
+
+    function addMessage(senderId, senderName, text, createdAt) {
+
+        console.log(
+            'Sender ID:',
+            senderId,
+            'Current User ID:',
+            currentUserId
+        );
+
+
+        const isMyMessage =
+            senderId !== null &&
+            senderId !== undefined &&
+            currentUserId !== null &&
+            currentUserId !== undefined &&
+            Number(senderId) === Number(currentUserId);
+
+
+        const message = document.createElement('div');
+
+
+        message.style.maxWidth = '65%';
+        message.style.padding = '8px 12px';
+        message.style.borderRadius = '8px';
+        message.style.color = 'white';
+        message.style.fontSize = '15px';
+        message.style.lineHeight = '1.4';
+        message.style.wordBreak = 'break-word';
+        message.style.flexShrink = '0';
+
+
+        if (isMyMessage) {
+
+            message.style.background = '#005c4b';
+            message.style.alignSelf = 'flex-end';
+            message.style.borderTopRightRadius = '0';
+
+        } else {
+
+            message.style.background = '#202c33';
+            message.style.alignSelf = 'flex-start';
+            message.style.borderTopLeftRadius = '0';
+
+        }
+
+
+        const textElement = document.createElement('div');
+
+        textElement.textContent = text;
+
+        message.appendChild(textElement);
+
+
+        const timeElement = document.createElement('span');
+
+        timeElement.style.fontSize = '0.7rem';
+        timeElement.style.color = '#8696a0';
+        timeElement.style.textAlign = 'right';
+        timeElement.style.marginTop = '4px';
+        timeElement.style.display = 'block';
+
+
+        if (createdAt) {
+
+            const date = new Date(createdAt);
+
+            if (!isNaN(date.getTime())) {
+
+                timeElement.textContent =
+                    date.getHours()
+                        .toString()
+                        .padStart(2, '0')
+                    +
+                    ':'
+                    +
+                    date.getMinutes()
+                        .toString()
+                        .padStart(2, '0');
+
+            } else {
+
+                timeElement.textContent = createdAt;
+
+            }
+
+        }
+
+
+        message.appendChild(timeElement);
+
+
+        messagesContainer.appendChild(message);
+
+
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+
+    }
+
+
+    function loadMessages() {
+
+        fetch('/api/chats/' + chatId + '/messages')
+
+            .then(response => {
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        'Failed to load messages: ' +
+                        response.status
+                    );
+
+                }
+
+                return response.json();
+
+            })
+
+            .then(messages => {
+
+                console.log(
+                    'Loaded messages:',
+                    messages
+                );
+
+
+                messages.forEach(message => {
+
+                    addMessage(
+                        message.senderId,
+                        message.senderName,
+                        message.text,
+                        message.createdAt
+                    );
+
+                });
+
+
+                chatWindow.scrollTop =
+                    chatWindow.scrollHeight;
+
+            })
+
+            .catch(error => {
+
+                console.error(
+                    'Error loading messages:',
+                    error
+                );
+
+            });
+
+    }
+
+
+    loadMessages();
+
+</script>
+
 </body>
 </html>

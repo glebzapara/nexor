@@ -1,10 +1,125 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>Nexor</title>
+  <meta name="description"
+        content="UniPortal is an academic web application for a university,
+                providing students and teachers with access to schedules, grades,
+                assignments and course information through a role-based system.">
+  <meta property="og:title" content="Nexor">
+  <meta property="og:description"
+        content="Academic web application for schedules, grades, assignments and course information.">
+  <meta property="og:url" content="https://nexor.website">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Nexor">
+  <meta property="og:image" content="https://nexor.website/images/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/images/favicon.ico">
 </head>
-<body>
-$END$
+
+<body style="
+    margin: 0;
+    background: #202c33;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+">
+
+<div style="
+    width:460px;
+    padding:40px 35px;
+    background:#202c33;
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:12px;
+    box-sizing:border-box;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    margin-top:-60px;
+">
+
+  <div style="text-align:center; margin:10px 0 35px 0;">
+        <span style="font-size:30px; font-weight:700; color:white">
+            Ne<span style="color:#22c55e;">xor</span>
+        </span>
+  </div>
+
+  <div th:if="${param.error}" style="text-align:center; margin-bottom:15px; font-size:15px;">
+    <span style="color:red;">Invalid email or password</span>
+  </div>
+
+  <div th:if="${param.logout}" style="text-align:center; margin-bottom:15px; font-size:15px;">
+    <span style="color:green;">You have been logged out</span>
+  </div>
+  <form th:action="@{/login}" method="post">
+
+    <div style="margin-bottom:18px; color:white">
+      <label style="font-size:15px; font-weight:600;">Email</label>
+      <input type="text"
+             name="username"
+             placeholder="Enter email"
+             style="
+            width:100%;
+            padding:12px;
+            margin-top:6px;
+            background:#2a3942;
+            color:white;
+            border:1px solid #3b4a54;
+            border-radius:6px;
+            font-size:15px;
+            box-sizing:border-box;
+            outline:none;
+">
+    </div>
+
+    <div style="margin-bottom:25px; color:white;">
+      <label style="font-size:15px; font-weight:600;">Password</label>
+      <input type="password"
+             name="password"
+             placeholder="Enter password"
+             style="
+            width:100%;
+            padding:12px;
+            margin-top:6px;
+            background:#2a3942;
+            color:white;
+            border:1px solid #3b4a54;
+            border-radius:6px;
+            font-size:15px;
+            box-sizing:border-box;
+            outline:none;
+       ">
+    </div>
+
+    <button type="submit"
+            style="
+            width:100%;
+            padding:14px;
+            background:#22c55e;
+            color:#283238;
+            border:none;
+            border-radius:8px;
+            font-weight:700;
+            font-size:16px;
+            cursor:pointer;
+            margin-top:10px;
+        ">
+      Sign in
+    </button>
+  </form>
+
+  <a th:href="@{/register}" style="color: white; display: flex;
+    justify-content: center; align-items: center;
+    margin-top: 30px">Sign Up<a/>
+</div>
+
+<div style="position: absolute; bottom: 0; width: 100%;">
+  <div th:replace="~{footer :: copy-footer}"></div>
+</div>
+
 </body>
 </html>

@@ -1,6 +1,10 @@
 package com.glebzapara.nexor.repositories;
 
+import com.glebzapara.nexor.models.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface Message extends JpaRepository<Message, Integer> {
+import java.util.List;
+
+public interface MessageRepository extends JpaRepository<Message, Integer> {
+    List<Message> findByChatIdOrderByCreatedAtAsc(Integer chatId);
 }

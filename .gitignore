@@ -30,7 +30,6 @@ build/
 !**/src/test/**/build/
 
 # environment variables
-
 .env
 .env.*
 

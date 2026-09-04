@@ -1,8 +1,8 @@
-package com.glebzapara.uniportal.config;
+package com.glebzapara.nexor.config;
 
-import com.glebzapara.uniportal.models.Student;
-import com.glebzapara.uniportal.repositories.StudentRepository;
-import com.glebzapara.uniportal.security.StudentDetails;
+import com.glebzapara.nexor.models.User;
+import com.glebzapara.nexor.repositories.UserRepository;
+import com.glebzapara.nexor.security.ClientUserDetails;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,14 +13,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.time.*;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @Component
 public class LastSeenFilter extends OncePerRequestFilter {
-    private final StudentRepository studentRepository;
+    private final UserRepository userRepository;
 
-    public LastSeenFilter(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
+    public LastSeenFilter(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -31,16 +32,16 @@ public class LastSeenFilter extends OncePerRequestFilter {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        if (auth != null && auth.getPrincipal() instanceof StudentDetails studentDetails) {
-            Student student = studentDetails.getStudent();
+        if (auth != null && auth.getPrincipal() instanceof ClientUserDetails clientUserDetails) {
+            User user = clientUserDetails.getUser();
 
             ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Europe/Kyiv"));
 
-            if (student.getLastSeen() == null ||
-                    student.getLastSeen().isBefore(now.minusMinutes(5))) {
+            if (user.getLastSeen() == null ||
+                    user.getLastSeen().isBefore(now.minusMinutes(5))) {
 
-                student.setLastSeen(now);
-                studentRepository.save(student);
+                user.setLastSeen(now);
+                userRepository.save(user);
             }
         }
 

@@ -55,12 +55,69 @@
     <div th:if="${param.logout}" style="text-align:center; margin-bottom:15px; font-size:15px;">
         <span style="color:green;">You have been logged out</span>
     </div>
-    <form th:action="@{/registration}" method="post">
+    <form th:action="@{/register}" method="post">
+
+        <div style="margin-bottom:18px; color:white">
+            <label style="font-size:15px; font-weight:600;">Username</label>
+            <input type="text"
+                   name="username"
+                   placeholder="Enter username"
+                   style="
+            width:100%;
+            padding:12px;
+            margin-top:6px;
+            background:#2a3942;
+            color:white;
+            border:1px solid #3b4a54;
+            border-radius:6px;
+            font-size:15px;
+            box-sizing:border-box;
+            outline:none;
+">
+        </div>
+
+        <div style="margin-bottom:18px; color:white">
+            <label style="font-size:15px; font-weight:600;">FirstName</label>
+            <input type="text"
+                   name="firstname"
+                   placeholder="Enter firstname"
+                   style="
+            width:100%;
+            padding:12px;
+            margin-top:6px;
+            background:#2a3942;
+            color:white;
+            border:1px solid #3b4a54;
+            border-radius:6px;
+            font-size:15px;
+            box-sizing:border-box;
+            outline:none;
+">
+        </div>
+
+        <div style="margin-bottom:18px; color:white">
+            <label style="font-size:15px; font-weight:600;">LastName</label>
+            <input type="text"
+                   name="lastname"
+                   placeholder="Enter lastname"
+                   style="
+            width:100%;
+            padding:12px;
+            margin-top:6px;
+            background:#2a3942;
+            color:white;
+            border:1px solid #3b4a54;
+            border-radius:6px;
+            font-size:15px;
+            box-sizing:border-box;
+            outline:none;
+">
+        </div>
 
         <div style="margin-bottom:18px; color:white">
             <label style="font-size:15px; font-weight:600;">Email</label>
             <input type="text"
-                   name="username"
+                   name="email"
                    placeholder="Enter email"
                    style="
             width:100%;
@@ -95,6 +152,44 @@
        ">
         </div>
 
+        <div style="margin-bottom:25px; color:white;">
+            <label style="font-size:15px; font-weight:600;">Phone Number</label>
+            <input type="text"
+                   name="phoneNumber"
+                   placeholder="Enter phone number"
+                   style="
+            width:100%;
+            padding:12px;
+            margin-top:6px;
+            background:#2a3942;
+            color:white;
+            border:1px solid #3b4a54;
+            border-radius:6px;
+            font-size:15px;
+            box-sizing:border-box;
+            outline:none;
+       ">
+        </div>
+
+        <div style="margin-bottom:25px; color:white;">
+            <label style="font-size:15px; font-weight:600;">Image</label>
+            <input type="image"
+                   name="image"
+                   placeholder="image"
+                   style="
+            width:100%;
+            padding:12px;
+            margin-top:6px;
+            background:#2a3942;
+            color:white;
+            border:1px solid #3b4a54;
+            border-radius:6px;
+            font-size:15px;
+            box-sizing:border-box;
+            outline:none;
+       ">
+        </div>
+
         <button type="submit"
                 style="
             width:100%;
@@ -108,14 +203,9 @@
             cursor:pointer;
             margin-top:10px;
         ">
-            Sign in
+            Sign up
         </button>
     </form>
-
-    <a th:href="@{/registration}" style="color: white; display: flex;
-    justify-content: center; align-items: center;
-    margin-top: 30px">Sign Up<a/>
-</div>
 
 <div style="position: absolute; bottom: 0; width: 100%;">
     <div th:replace="~{footer :: copy-footer}"></div>

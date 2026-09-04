@@ -9,5 +9,4 @@ public class NexorApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(NexorApplication.class, args);
 	}
-
 }
