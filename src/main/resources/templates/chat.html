@@ -557,8 +557,10 @@
 
 <script>
 
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+
     const client = new StompJs.Client({
-        brokerURL: 'ws://localhost:8080/ws'
+        brokerURL: protocol + '//' + window.location.host + '/ws'
     });
 
     const chatWindow = document.getElementById('chat-window');
