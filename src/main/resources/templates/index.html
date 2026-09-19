@@ -206,6 +206,7 @@
 ">
 
 
+
     <div style="
         width:320px;
         background:#111b21;
@@ -214,6 +215,60 @@
         border-right:1px solid #222e35;
         flex-shrink:0;
     ">
+        <div style="
+    background:#202c33;
+    border-bottom:1px solid #222e35;
+    padding:12px 10px;
+    box-sizing:border-box;
+">
+
+            <form th:action="@{/users/search}" method="post" style="
+        display:flex;
+        align-items:center;
+        gap:8px;
+        margin:0;
+        padding:0;
+    ">
+
+                <input type="text"
+                       name="searchTerm"
+                       placeholder="Search"
+                       style="
+                   flex:1;
+                   min-width:0;
+                   height:40px;
+                   box-sizing:border-box;
+                   background:#2a3942;
+                   border:1px solid #3b4a54;
+                   border-radius:8px;
+                   padding:0 13px;
+                   color:#e9edef;
+                   font-size:0.9rem;
+                   outline:none;
+               ">
+
+                <button type="submit"
+                        style="
+                    width:40px;
+                    height:40px;
+                    flex-shrink:0;
+                    background:#00a884;
+                    color:#111b21;
+                    border:none;
+                    border-radius:8px;
+                    cursor:pointer;
+                    font-size:18px;
+                    font-weight:bold;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                ">
+                    🔍
+                </button>
+
+            </form>
+
+        </div>
 
         <a th:each="c : ${chats}"
            th:href="@{/chats/{id}(id=${c.id})}"

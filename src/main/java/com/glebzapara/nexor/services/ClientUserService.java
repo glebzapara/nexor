@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClientUserService {
@@ -20,8 +21,16 @@ public class ClientUserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
+    }
+
     public User findById(Integer id) {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+    }
+    
+    public User findByUserName(String name) {
+        return userRepository.findByUserName(name).orElseThrow(() -> new RuntimeException("User not found"));
     }
 
     public void registerUser(User user /*Integer groupId*/) throws Exception {

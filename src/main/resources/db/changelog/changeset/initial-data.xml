@@ -4,4 +4,17 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
+    <changeSet id="insert-users-1" author="Gleb Zapara">
+        <sql dbms="postgresql">
+            <![CDATA[
+            INSERT INTO users(username, firstname, lastname, email, password, phone_number, role)
+            VALUES
+                ('@kaka', 'Dax', 'Ibragid', 'test2@gmail.com',
+                '$2a$10$LcdQNUErJBlQRzJqAg6equ0oJUiX/jN0Mh/u7r9bmgKS4kS3rj1PC', '+380999999999', 'ROLE_USER'),
+                ('@baka',   'Sagd', 'Dpoap', 'test4@gmail.com',
+                '$2a$10$LcdQNUErJBlQRzJqAg6equ0oJUiX/jN0Mh/u7r9bmgKS4kS3rj1PC', '+380999999998', 'ROLE_USER');
+            ]]>
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>

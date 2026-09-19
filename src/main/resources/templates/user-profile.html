@@ -256,7 +256,7 @@
                      margin:0 auto;
                      box-sizing:border-box;
                  "
-                 th:text="${#strings.substring(user.firstname,0,1)}">
+                 th:text="${#strings.substring(user.firstName,0,1)}">
             </div>
 
             <div style="
@@ -265,7 +265,7 @@
                 margin-top:25px;
                 margin-bottom:14px;
             "
-                 th:text="${user.firstname + ' ' + user.lastname}">
+                 th:text="${user.firstName + ' ' + user.lastName}">
             </div>
 
             <div style="
@@ -296,7 +296,7 @@
                         First name:
                     </b>
 
-                    <span th:text="${user.firstname}"></span>
+                    <span th:text="${user.firstName}"></span>
                 </div>
 
 
@@ -314,7 +314,7 @@
                         Last name:
                     </b>
 
-                    <span th:text="${user.lastname}"></span>
+                    <span th:text="${user.lastName}"></span>
                 </div>
 
 

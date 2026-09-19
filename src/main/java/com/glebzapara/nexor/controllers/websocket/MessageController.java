@@ -55,7 +55,7 @@ public class MessageController {
                 message.getId(),
                 message.getText(),
                 user.getId(),
-                user.getFirstname(),
+                user.getFirstName(),
                 message.getCreatedAt()
         );
     }
@@ -70,7 +70,7 @@ public class MessageController {
                         message.getId(),
                         message.getText(),
                         message.getSender().getId(),
-                        message.getSender().getFirstname(),
+                        message.getSender().getFirstName(),
                         message.getCreatedAt()
                 ))
                 .toList();

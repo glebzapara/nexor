@@ -1,6 +1,7 @@
 package com.glebzapara.nexor.controllers.mvc;
 
 import com.glebzapara.nexor.models.Admin;
+import com.glebzapara.nexor.models.Chat;
 import com.glebzapara.nexor.models.User;
 import com.glebzapara.nexor.security.AdminDetails;
 import com.glebzapara.nexor.security.ClientUserDetails;
@@ -9,11 +10,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import com.glebzapara.nexor.services.ClientUserService;
-import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class ChatController {
@@ -83,5 +84,36 @@ public class ChatController {
         model.addAttribute("id", id);
 
         return "chat";
+    }
+
+    @GetMapping("/chats/create/{id}")
+    public String createChat(@PathVariable Integer id,
+                             Authentication authentication) {
+        ClientUserDetails clientUserDetails = (ClientUserDetails) authentication.getPrincipal();
+
+        User currentUser = clientUserDetails.getUser();
+        User targetUser = clientUserService.findById(id);
+
+        Chat chat = chatService.createChat(currentUser, targetUser);
+
+        return "redirect:/chats/" + chat.getId();
+    }
+
+    @PostMapping("/users/search")
+    public String searchStudents(@RequestParam("searchTerm") String searchTerm,
+                                 Model model) {
+        List<User> filtered = new ArrayList<>();
+
+        for (User user : clientUserService.findAllUsers()) {
+            String userName = (user.getUserName()).toLowerCase();
+
+            if (userName.contains(searchTerm.toLowerCase())) {
+                filtered.add(user);
+            }
+        }
+
+        model.addAttribute("users", filtered);
+
+        return "search";
     }
 }

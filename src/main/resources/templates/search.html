@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+</head>
+
+<body style="
+    margin:0;
+    background:#0b141a;
+    color:#e9edef;
+    font-family:Arial,sans-serif;
+    min-height:100vh;
+">
+
+<div style="
+    width:100%;
+    min-height:100vh;
+    background:#111b21;
+">
+
+    <div style="
+        height:60px;
+        background:#202c33;
+        display:flex;
+        align-items:center;
+        padding:0 20px;
+        box-sizing:border-box;
+        border-bottom:1px solid #222e35;
+    ">
+        <div style="
+            font-size:24px;
+            font-weight:bold;
+        ">
+            Ne<span style="color:#22c55e;">xor</span>
+        </div>
+    </div>
+
+    <div style="
+        max-width:700px;
+        margin:0 auto;
+        padding:30px 20px;
+        box-sizing:border-box;
+    ">
+
+        <div style="
+            font-size:22px;
+            font-weight:600;
+            margin-bottom:20px;
+        ">
+            Search results
+        </div>
+
+        <form th:action="@{/users/search}" method="post" style="
+            display:flex;
+            gap:8px;
+            margin-bottom:25px;
+        ">
+
+            <input
+                    type="text"
+                    name="searchTerm"
+                    placeholder="Search"
+                    style="
+                        flex:1;
+                        min-width:0;
+                        height:42px;
+                        box-sizing:border-box;
+                        background:#2a3942;
+                        border:1px solid #3b4a54;
+                        border-radius:8px;
+                        padding:0 14px;
+                        color:#e9edef;
+                        font-size:15px;
+                        outline:none;
+                    "
+            >
+
+            <button
+                    type="submit"
+                    style="
+                        width:42px;
+                        height:42px;
+                        background:#00a884;
+                        color:#111b21;
+                        border:none;
+                        border-radius:8px;
+                        cursor:pointer;
+                        font-size:18px;
+                    "
+            >
+                🔍
+            </button>
+
+        </form>
+
+        <div th:if="${users.isEmpty()}" style="
+            background:#202c33;
+            border-radius:8px;
+            padding:20px;
+            color:#8696a0;
+            text-align:center;
+        ">
+            No Matches
+        </div>
+
+        <div th:each="user : ${users}" style="
+    background:#202c33;
+    border:1px solid #2a3942;
+    border-radius:12px;
+    padding:12px 15px;
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    box-sizing:border-box;
+">
+
+            <div style="
+    min-width:0;
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+">
+
+                <div style="
+                width:45px;
+                height:45px;
+                border-radius:50%;
+                background:#2a3942;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                color:#00a884;
+                font-size:18px;
+                font-weight:bold;
+                flex-shrink:0;
+            ">
+                    <span th:text="${#strings.substring(user.firstName, 0, 1).toUpperCase()}"></span>
+                </div>
+
+                <div style="
+        font-size:16px;
+        font-weight:600;
+        margin:0;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+    "
+                     th:text="${user.userName}">
+                    username
+                </div>
+
+                <div style="
+        display:flex;
+        align-items:center;
+        gap:6px;
+        flex-shrink:0;
+    ">
+
+                    <a th:href="@{/add}"
+                       style="
+               width:40px;
+               height:40px;
+               border-radius:8px;
+               background:#2a3942;
+               color:#00a884;
+               font-weight:bold;
+               cursor:pointer;
+               display:inline-flex;
+               align-items:center;
+               justify-content:center;
+               text-decoration:none;
+               box-sizing:border-box;
+           ">
+                        ➕
+                    </a>
+
+                    <a th:href="@{/chats/create/{id}(id = ${user.id})}"
+                       style="
+               width:40px;
+               height:40px;
+               border-radius:8px;
+               background:#2a3942;
+               color:#00a884;
+               font-weight:bold;
+               cursor:pointer;
+               display:inline-flex;
+               align-items:center;
+               justify-content:center;
+               text-decoration:none;
+               box-sizing:border-box;
+           ">
+                        💬
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

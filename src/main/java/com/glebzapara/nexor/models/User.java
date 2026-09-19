@@ -23,17 +23,17 @@ public class User {
     @NotNull
     @Size(max = 255)
     @Column(name = "username", nullable = false)
-    private String username;
+    private String userName;
 
     @NotNull
     @Size(max = 255)
     @Column(name = "firstname", nullable = false)
-    private String firstname;
+    private String firstName;
 
     @NotNull
     @Size(max = 255)
     @Column(name = "lastname", nullable = false)
-    private String lastname;
+    private String lastName;
 
     @NotNull
     @Email
