@@ -79,6 +79,7 @@ public class ChatController {
 
             model.addAttribute("chats", chatService.findChatsByUserId(user.getId()));
             model.addAttribute("currentUser", user);
+            model.addAttribute("currentChat", chatService.findById(id));
         }
 
         model.addAttribute("id", id);

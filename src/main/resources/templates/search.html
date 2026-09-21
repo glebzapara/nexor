@@ -1,233 +1,374 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            min-height: 100%;
+        }
+
+        body {
+            background: #0b141a;
+            color: #e9edef;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            min-height: 100dvh;
+        }
+
+        .search-page {
+            width: 100%;
+            min-height: 100vh;
+            min-height: 100dvh;
+            background: #111b21;
+        }
+
+        .search-header {
+            height: 60px;
+            background: #202c33;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            border-bottom: 1px solid #222e35;
+        }
+
+        .search-logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .search-content {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .search-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 0;
+            height: 42px;
+            background: #2a3942;
+            border: 1px solid #3b4a54;
+            border-radius: 8px;
+            padding: 0 14px;
+            color: #e9edef;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .search-button {
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            background: #00a884;
+            color: #111b21;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .no-matches {
+            background: #202c33;
+            border-radius: 8px;
+            padding: 20px;
+            color: #8696a0;
+            text-align: center;
+        }
+
+        .user-card {
+            background: #202c33;
+            border: 1px solid #2a3942;
+            border-radius: 12px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .user-main {
+            min-width: 0;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: #2a3942;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #00a884;
+            font-size: 18px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .user-info {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .user-name {
+            font-size: 16px;
+            font-weight: 600;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .user-divider {
+            color: #5f737d;
+            font-size: 18px;
+            font-weight: normal;
+        }
+
+        .user-username {
+            font-size: 16px;
+            font-weight: 600;
+            color: #8696a0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .user-action {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: #2a3942;
+            color: #00a884;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        @media (max-width: 600px) {
+
+            .search-header {
+                height: 55px;
+                padding: 0 15px;
+            }
+
+            .search-logo {
+                font-size: 22px;
+            }
+
+            .search-content {
+                width: 100%;
+                padding: 20px 12px;
+            }
+
+            .search-title {
+                font-size: 20px;
+                margin-bottom: 16px;
+            }
+
+            .search-form {
+                margin-bottom: 20px;
+            }
+
+            .search-input {
+                height: 42px;
+                font-size: 16px;
+                padding: 0 12px;
+            }
+
+            .search-button {
+                width: 42px;
+                height: 42px;
+            }
+
+            .user-card {
+                padding: 10px;
+            }
+
+            .user-main {
+                gap: 10px;
+            }
+
+            .user-avatar {
+                width: 42px;
+                height: 42px;
+                font-size: 17px;
+            }
+
+            .user-info {
+                justify-content: flex-start;
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 3px;
+            }
+
+            .user-name {
+                max-width: 100%;
+                font-size: 15px;
+            }
+
+            .user-divider {
+                display: none;
+            }
+
+            .user-username {
+                max-width: 100%;
+                font-size: 14px;
+            }
+
+            .user-actions {
+                gap: 5px;
+            }
+
+            .user-action {
+                width: 38px;
+                height: 38px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 380px) {
+
+            .search-content {
+                padding: 18px 10px;
+            }
+
+            .user-card {
+                padding: 9px;
+            }
+
+            .user-main {
+                gap: 8px;
+            }
+
+            .user-avatar {
+                width: 40px;
+                height: 40px;
+            }
+
+            .user-action {
+                width: 36px;
+                height: 36px;
+            }
+        }
+    </style>
 </head>
 
-<body style="
-    margin:0;
-    background:#0b141a;
-    color:#e9edef;
-    font-family:Arial,sans-serif;
-    min-height:100vh;
-">
+<body>
 
-<div style="
-    width:100%;
-    min-height:100vh;
-    background:#111b21;
-">
+<div class="search-page">
 
-    <div style="
-        height:60px;
-        background:#202c33;
-        display:flex;
-        align-items:center;
-        padding:0 20px;
-        box-sizing:border-box;
-        border-bottom:1px solid #222e35;
-    ">
-        <div style="
-            font-size:24px;
-            font-weight:bold;
-        ">
+    <div class="search-header">
+        <div class="search-logo">
             Ne<span style="color:#22c55e;">xor</span>
         </div>
     </div>
 
-    <div style="
-        max-width:700px;
-        margin:0 auto;
-        padding:30px 20px;
-        box-sizing:border-box;
-    ">
+    <div class="search-content">
 
-        <div style="
-            font-size:22px;
-            font-weight:600;
-            margin-bottom:20px;
-        ">
+        <div class="search-title">
             Search results
         </div>
 
-        <form th:action="@{/users/search}" method="post" style="
-            display:flex;
-            gap:8px;
-            margin-bottom:25px;
-        ">
+        <form th:action="@{/users/search}"
+              method="post"
+              class="search-form">
 
-            <input
-                    type="text"
-                    name="searchTerm"
-                    placeholder="Search"
-                    style="
-                        flex:1;
-                        min-width:0;
-                        height:42px;
-                        box-sizing:border-box;
-                        background:#2a3942;
-                        border:1px solid #3b4a54;
-                        border-radius:8px;
-                        padding:0 14px;
-                        color:#e9edef;
-                        font-size:15px;
-                        outline:none;
-                    "
-            >
+            <input type="text"
+                   name="searchTerm"
+                   placeholder="Search"
+                   class="search-input">
 
-            <button
-                    type="submit"
-                    style="
-                        width:42px;
-                        height:42px;
-                        background:#00a884;
-                        color:#111b21;
-                        border:none;
-                        border-radius:8px;
-                        cursor:pointer;
-                        font-size:18px;
-                    "
-            >
+            <button type="submit"
+                    class="search-button">
                 🔍
             </button>
 
         </form>
 
-        <div th:if="${users.isEmpty()}" style="
-            background:#202c33;
-            border-radius:8px;
-            padding:20px;
-            color:#8696a0;
-            text-align:center;
-        ">
+        <div th:if="${users.isEmpty()}"
+             class="no-matches">
             No Matches
         </div>
 
-        <div th:each="user : ${users}" style="
-    background:#202c33;
-    border:1px solid #2a3942;
-    border-radius:12px;
-    padding:12px 15px;
-    margin-bottom:10px;
-    display:flex;
-    align-items:center;
-    box-sizing:border-box;
-">
+        <div th:each="user : ${users}"
+             class="user-card">
 
-            <div style="
-    min-width:0;
-    flex:1;
-    display:flex;
-    align-items:center;
-    gap:20px;
-">
+            <div class="user-main">
 
-                <div style="
-        width:45px;
-        height:45px;
-        border-radius:50%;
-        background:#2a3942;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        color:#00a884;
-        font-size:18px;
-        font-weight:bold;
-        flex-shrink:0;
-    ">
+                <div class="user-avatar">
                     <span th:text="${#strings.substring(user.firstName, 0, 1).toUpperCase()}"></span>
                 </div>
 
-                <div style="
-        flex:1;
-        min-width:0;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        gap:30px;
-    ">
+                <div class="user-info">
 
-                    <div style="
-            font-size:16px;
-            font-weight:600;
-            overflow:hidden;
-            text-overflow:ellipsis;
-            white-space:nowrap;
-        "
+                    <div class="user-name"
                          th:text="${user.firstName + ' ' + user.lastName}">
                     </div>
 
-                    <div style="
-        color:#5f737d;
-        font-size:18px;
-        font-weight:normal;
-    ">
+                    <div class="user-divider">
                         |
                     </div>
 
-                    <div style="
-            font-size:16px;
-            font-weight:600;
-            color:#8696a0;
-            overflow:hidden;
-            text-overflow:ellipsis;
-            white-space:nowrap;
-        "
+                    <div class="user-username"
                          th:text="${user.userName}">
                         username
                     </div>
 
                 </div>
 
-                <div style="
-        display:flex;
-        align-items:center;
-        gap:6px;
-        flex-shrink:0;
-    ">
+                <div class="user-actions">
 
                     <a th:href="@{/add}"
-                       style="
-               width:40px;
-               height:40px;
-               border-radius:8px;
-               background:#2a3942;
-               color:#00a884;
-               font-weight:bold;
-               cursor:pointer;
-               display:inline-flex;
-               align-items:center;
-               justify-content:center;
-               text-decoration:none;
-               box-sizing:border-box;
-           ">
+                       class="user-action">
                         ➕
                     </a>
 
                     <a th:href="@{/chats/create/{id}(id = ${user.id})}"
-                       style="
-               width:40px;
-               height:40px;
-               border-radius:8px;
-               background:#2a3942;
-               color:#00a884;
-               font-weight:bold;
-               cursor:pointer;
-               display:inline-flex;
-               align-items:center;
-               justify-content:center;
-               text-decoration:none;
-               box-sizing:border-box;
-           ">
+                       class="user-action">
                         💬
                     </a>
 
                 </div>
 
             </div>
-
 
         </div>
 

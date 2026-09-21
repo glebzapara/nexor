@@ -3,61 +3,86 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexor</title>
     <link rel="icon" href="/images/favicon.ico">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Nexor</title>
-        <link rel="icon" href="/images/favicon.ico">
 
-        <style>
-            @media (max-width: 700px) {
+    <style>
+        body {
+            height: 100dvh !important;
+        }
 
-                nav {
-                    padding: 10px !important;
-                }
-
-                nav + div > div:first-child {
-                    display: none !important;
-                }
-
-                nav + div > div:last-child {
-                    width: 100%;
-                }
-
-                nav + div > div:last-child > div:first-child {
-                    padding: 0 12px !important;
-                }
-
-                #chat-window {
-                    padding: 10px !important;
-                }
-
-                #chat-window + div {
-                    padding: 8px !important;
-                    gap: 6px !important;
-                }
-
-                #chat-window + div > div:first-child {
-                    gap: 4px !important;
-                }
-
-                #chat-window + div > div:first-child button {
-                    padding: 5px 7px !important;
-                }
-
-                #message-input {
-                    min-width: 0 !important;
-                    padding: 9px 10px !important;
-                }
-
-                #messages-container > div {
-                    max-width: 80% !important;
-                }
+        @media (max-width: 700px) {
+            nav {
+                padding: 10px !important;
             }
-        </style>
-    </head>
+
+            nav + div {
+                position: relative !important;
+            }
+
+            #chat-list {
+                display: none !important;
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                bottom: 0 !important;
+                width: 280px !important;
+                z-index: 100 !important;
+                box-shadow: 5px 0 20px rgba(0,0,0,0.5);
+            }
+
+            #chat-list.mobile-open {
+                display: flex !important;
+            }
+
+            nav + div > div:last-child {
+                width: 100% !important;
+                min-width: 0 !important;
+            }
+
+            #mobile-menu-btn {
+                display: flex !important;
+            }
+
+            #chat-window {
+                padding: 10px !important;
+            }
+
+            #message-composer {
+                min-height: 58px !important;
+                padding: 8px !important;
+                gap: 6px !important;
+            }
+
+            #message-composer > div:first-child {
+                gap: 4px !important;
+                flex-shrink: 0 !important;
+            }
+
+            #message-composer > div:first-child button {
+                width: 36px !important;
+                height: 36px !important;
+                padding: 0 !important;
+            }
+
+            #message-input {
+                min-width: 0 !important;
+                width: 100% !important;
+                height: 40px !important;
+                padding: 8px 10px !important;
+            }
+
+            #send-btn {
+                width: 40px !important;
+                height: 40px !important;
+            }
+
+            #chat-window > div:not([style*="position:absolute"]) {
+                max-width: 80%;
+            }
+        }
+    </style>
 </head>
 
 <body style="
@@ -256,11 +281,12 @@
     display:flex;
     min-height:0;
     overflow:hidden;
+    position:relative;
 ">
 
 
 
-    <div style="
+    <div id="chat-list" style="
         width:320px;
         background:#111b21;
         display:flex;
@@ -421,6 +447,25 @@
         ">
 
 
+            <button id="mobile-menu-btn"
+                    onclick="toggleChatList()"
+                    style="
+                        display:none;
+                        width:40px;
+                        height:40px;
+                        flex-shrink:0;
+                        border:none;
+                        border-radius:8px;
+                        background:#2a3942;
+                        color:#00a884;
+                        font-size:22px;
+                        align-items:center;
+                        justify-content:center;
+                        cursor:pointer;
+                    ">
+                ☰
+            </button>
+
 
         </div>
 
@@ -518,61 +563,61 @@
             </div>
 
 
-<!--            <div style="-->
-<!--                max-width:65%;-->
-<!--                padding:8px 12px;-->
-<!--                border-radius:8px;-->
-<!--                border-top-left-radius:0;-->
-<!--                font-size:0.95rem;-->
-<!--                line-height:1.4;-->
-<!--                background:#202c33;-->
-<!--                align-self:flex-start;-->
-<!--            ">-->
+            <!--            <div style="-->
+            <!--                max-width:65%;-->
+            <!--                padding:8px 12px;-->
+            <!--                border-radius:8px;-->
+            <!--                border-top-left-radius:0;-->
+            <!--                font-size:0.95rem;-->
+            <!--                line-height:1.4;-->
+            <!--                background:#202c33;-->
+            <!--                align-self:flex-start;-->
+            <!--            ">-->
 
 
-<!--                Welcome to the Nexor homepage!-->
+            <!--                Welcome to the Nexor homepage!-->
 
-<!--                <span style="-->
-<!--                    font-size:0.7rem;-->
-<!--                    color:#8696a0;-->
-<!--                    text-align:right;-->
-<!--                    margin-top:4px;-->
-<!--                    display:block;-->
-<!--                ">-->
-<!--                    22:38-->
-<!--                </span>-->
+            <!--                <span style="-->
+            <!--                    font-size:0.7rem;-->
+            <!--                    color:#8696a0;-->
+            <!--                    text-align:right;-->
+            <!--                    margin-top:4px;-->
+            <!--                    display:block;-->
+            <!--                ">-->
+            <!--                    22:38-->
+            <!--                </span>-->
 
-<!--            </div>-->
+            <!--            </div>-->
 
-<!--            <div style="-->
-<!--                max-width:65%;-->
-<!--                padding:8px 12px;-->
-<!--                border-radius:8px;-->
-<!--                border-top-right-radius:0;-->
-<!--                font-size:0.95rem;-->
-<!--                line-height:1.4;-->
-<!--                background:#005c4b;-->
-<!--                align-self:flex-end;-->
-<!--            ">-->
+            <!--            <div style="-->
+            <!--                max-width:65%;-->
+            <!--                padding:8px 12px;-->
+            <!--                border-radius:8px;-->
+            <!--                border-top-right-radius:0;-->
+            <!--                font-size:0.95rem;-->
+            <!--                line-height:1.4;-->
+            <!--                background:#005c4b;-->
+            <!--                align-self:flex-end;-->
+            <!--            ">-->
 
-<!--                ⎛⎝( ` ᢍ ´ )⎠⎞ᵐᵘʰᵃʰᵃ-->
+            <!--                ⎛⎝( ` ᢍ ´ )⎠⎞ᵐᵘʰᵃʰᵃ-->
 
-<!--                <span style="-->
-<!--                    font-size:0.7rem;-->
-<!--                    color:#8696a0;-->
-<!--                    text-align:right;-->
-<!--                    margin-top:4px;-->
-<!--                    display:block;-->
-<!--                ">-->
-<!--                    22:40-->
-<!--                </span>-->
+            <!--                <span style="-->
+            <!--                    font-size:0.7rem;-->
+            <!--                    color:#8696a0;-->
+            <!--                    text-align:right;-->
+            <!--                    margin-top:4px;-->
+            <!--                    display:block;-->
+            <!--                ">-->
+            <!--                    22:40-->
+            <!--                </span>-->
 
-<!--            </div>-->
+            <!--            </div>-->
 
         </div>
 
 
-        <div style="
+        <div id="message-composer" style="
             min-height:60px;
             background:#202c33;
             padding:10px 15px;
@@ -680,6 +725,11 @@
     const chatWindow = document.getElementById('chat-window');
     const messageInput = document.getElementById('message-input');
     const sendButton = document.getElementById('send-btn');
+
+    function toggleChatList() {
+        const chatList = document.getElementById('chat-list');
+        chatList.classList.toggle('mobile-open');
+    }
 
     client.onConnect = function () {
 
