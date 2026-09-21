@@ -3,59 +3,98 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexor</title>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Nexor</title>
-        <link rel="icon" href="/images/favicon.ico">
-        <style>
-            @media (max-width: 700px) {
+    <link rel="icon" href="/images/favicon.ico">
+    <style>
+        #mobile-menu-btn {
+            display:none;
+        }
 
-                nav {
-                    padding: 10px !important;
-                }
-
-                nav + div > div:first-child {
-                    display: none !important;
-                }
-
-                nav + div > div:last-child {
-                    width: 100%;
-                }
-
-                nav + div > div:last-child > div:first-child {
-                    padding: 0 12px !important;
-                }
-
-                #chat-window {
-                    padding: 10px !important;
-                }
-
-                #chat-window + div {
-                    padding: 8px !important;
-                    gap: 6px !important;
-                }
-
-                #chat-window + div > div:first-child {
-                    gap: 4px !important;
-                }
-
-                #chat-window + div > div:first-child button {
-                    padding: 5px 7px !important;
-                }
-
-                #message-input {
-                    min-width: 0 !important;
-                    padding: 9px 10px !important;
-                }
-
-                #messages-container > div {
-                    max-width: 80% !important;
-                }
+        @media (max-width: 700px) {
+            nav {
+                padding: 10px !important;
             }
-        </style>
-    </head>
+
+            nav + div {
+                position:relative;
+            }
+
+            #chat-list {
+                display:none !important;
+                position:absolute !important;
+                left:0;
+                top:0;
+                bottom:0;
+                width:280px !important;
+                z-index:100;
+                box-shadow:5px 0 20px rgba(0,0,0,0.5);
+            }
+
+            #chat-list.mobile-open {
+                display:flex !important;
+            }
+
+            nav + div > div:last-child {
+                width:100%;
+            }
+
+            nav + div > div:last-child > div:first-child {
+                padding:0 12px !important;
+            }
+
+            #mobile-menu-btn {
+                display:flex !important;
+                width:40px !important;
+                height:40px !important;
+                flex-shrink:0 !important;
+                border:none !important;
+                border-radius:8px !important;
+                background:#2a3942 !important;
+                color:#00a884 !important;
+                font-size:22px !important;
+                align-items:center !important;
+                justify-content:center !important;
+                cursor:pointer !important;
+                padding:0 !important;
+            }
+
+            #chat-window {
+                padding:10px !important;
+            }
+
+            #message-composer {
+                min-height:58px !important;
+                padding:8px !important;
+                gap:6px !important;
+            }
+
+            #message-composer > div:first-child {
+                gap:4px !important;
+            }
+
+            #message-composer > div:first-child button {
+                width:36px !important;
+                height:36px !important;
+                padding:0 !important;
+            }
+
+            #message-input {
+                min-width:0 !important;
+                height:40px !important;
+                padding:9px 10px !important;
+            }
+
+            #send-btn {
+                width:40px !important;
+                height:40px !important;
+            }
+
+            #messages-container > div {
+                max-width:80% !important;
+            }
+        }
+    </style>
 </head>
 
 <body style="
@@ -66,6 +105,7 @@
     display:flex;
     flex-direction:column;
     height:100vh;
+    height:100dvh;
     overflow:hidden;
     font-family:Arial,sans-serif;
 ">
@@ -79,7 +119,6 @@
 
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
-
 
             <td align="left">
 
@@ -95,7 +134,6 @@
 
             </td>
 
-
             <td align="right">
 
                 <span th:if="${currentUser != null and currentUser.role == 'ROLE_USER'}"
@@ -103,73 +141,73 @@
 
                     <a th:href="@{/add}"
                        style="
-       width: 40px;
-       height: 40px;
-       border-radius: 8px;
-       background: #2a3942;
-       color: #00a884;
-       font-weight: bold;
-       cursor: pointer;
-       margin-top: auto;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: #2a3942;
+        color: #00a884;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: auto;
 
-       display: inline-flex;
-       align-items: center;
-       justify-content: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
 
-       text-decoration: none;
-       box-sizing: border-box;
-       flex-shrink: 0;
+        text-decoration: none;
+        box-sizing: border-box;
+        flex-shrink: 0;
    ">
-    ➕
-</a>
+                        ➕
+                    </a>
 
                     &#8202;
 
                     <a th:href="@{/}"
                        style="
-       width: 40px;
-       height: 40px;
-       border-radius: 8px;
-       background: #2a3942;
-       color: #00a884;
-       font-weight: bold;
-       cursor: pointer;
-       margin-top: auto;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: #2a3942;
+        color: #00a884;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: auto;
 
-       display: inline-flex;
-       align-items: center;
-       justify-content: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
 
-       text-decoration: none;
-       box-sizing: border-box;
-       flex-shrink: 0;
+        text-decoration: none;
+        box-sizing: border-box;
+        flex-shrink: 0;
    ">
-    💬
-</a>
+                        💬
+                    </a>
 
                     &#8202;
 
                     <a th:href="@{/settings}"
                        style="
-       width: 40px;
-       height: 40px;
-       border-radius: 8px;
-       background: #2a3942;
-       color: #00a884;
-       font-weight: bold;
-       cursor: pointer;
-       margin-top: auto;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: #2a3942;
+        color: #00a884;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: auto;
 
-       display: inline-flex;
-       align-items: center;
-       justify-content: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
 
-       text-decoration: none;
-       box-sizing: border-box;
-       flex-shrink: 0;
+        text-decoration: none;
+        box-sizing: border-box;
+        flex-shrink: 0;
    ">
-    ⚙️
-</a>
+                        ⚙️
+                    </a>
 
                     &#8202;
 
@@ -185,30 +223,29 @@
 
                     <a th:href="@{/users/{id}/profile(id=${currentUser.id})}"
                        style="
-       width: 40px;
-       height: 40px;
-       border-radius: 8px;
-       background: #2a3942;
-       color: #00a884;
-       font-weight: bold;
-       cursor: pointer;
-       margin-top: auto;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: #2a3942;
+        color: #00a884;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: auto;
 
-       display: inline-flex;
-       align-items: center;
-       justify-content: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
 
-       text-decoration: none;
-       box-sizing: border-box;
-       flex-shrink: 0;
+        text-decoration: none;
+        box-sizing: border-box;
+        flex-shrink: 0;
    ">
-    👤
-</a>
+                        👤
+                    </a>
 
                 </span>
 
             </td>
-
 
             <td align="right">
 
@@ -253,9 +290,10 @@
     min-height:0;
     display:flex;
     overflow:hidden;
+    position:relative;
 ">
 
-    <div style="
+    <div id="chat-list" style="
         width:320px;
         flex-shrink:0;
         background:#111b21;
@@ -264,20 +302,18 @@
         border-right:1px solid #222e35;
     ">
 
-
         <a th:each="c : ${chats}"
            th:href="@{/chats/{id}(id=${c.id})}"
-
            style="
-       display:flex;
-       padding:12px 15px;
-       gap:12px;
-       cursor:pointer;
-       align-items:center;
-       border-bottom:1px solid #222e35;
-       background:#2a3942;
-       text-decoration:none;
-       color:white;
+        display:flex;
+        padding:12px 15px;
+        gap:12px;
+        cursor:pointer;
+        align-items:center;
+        border-bottom:1px solid #222e35;
+        background:#2a3942;
+        text-decoration:none;
+        color:white;
    ">
 
             <div style="
@@ -297,7 +333,6 @@
 
             </div>
 
-
             <div style="
         flex:1;
         min-width:0;
@@ -309,22 +344,21 @@
             margin-bottom:4px;
         ">
 
-            <span th:text="${c.name}"
-                  style="
-                      font-weight:600;
-                      font-size:0.95rem;
-                  ">
-            </span>
+                    <span th:text="${c.name}"
+                          style="
+                              font-weight:600;
+                              font-size:0.95rem;
+                          ">
+                    </span>
 
                     <span style="
                 font-size:0.75rem;
                 color:#8696a0;
             ">
-                22:41
-            </span>
+                        22:41
+                    </span>
 
                 </div>
-
 
                 <div style="
             font-size:0.85rem;
@@ -360,7 +394,11 @@
             gap:15px;
         ">
 
-
+            <button id="mobile-menu-btn"
+                    type="button"
+                    onclick="toggleChatList()">
+                ☰
+            </button>
 
             <div style="
                 width:40px;
@@ -397,112 +435,119 @@
 
         </div>
 
-        <div id="chat-window"
-             style="
-         flex:1;
-         padding:20px;
-         overflow-y:auto;
-         display:flex;
-         flex-direction:column;
-         position:relative;
-         isolation:isolate;
-     ">
+        <div style="
+            flex:1;
+            min-height:0;
+            position:relative;
+            overflow:hidden;
+            background:#0b141a;
+        ">
 
             <div style="
-        position:absolute;
-        inset:0;
-        overflow:hidden;
-        pointer-events:none;
-        z-index:0;
-    ">
+                position:absolute;
+                inset:0;
+                overflow:hidden;
+                pointer-events:none;
+                z-index:0;
+            ">
 
-        <span style="position:absolute;top:7%;left:12%;color:#8696a0;opacity:0.18;font-size:30px;white-space:nowrap;">
-    ꒰ ˶• ༝ •˶꒱
-</span>
+                <span style="position:absolute;top:7%;left:12%;color:#8696a0;opacity:0.18;font-size:30px;white-space:nowrap;">
+                    ꒰ ˶• ༝ •˶꒱
+                </span>
 
                 <span style="position:absolute;top:15%;left:43%;color:#8696a0;opacity:0.18;font-size:25px;white-space:nowrap;">
-    ⎛⎝( ` ᢍ ´ )⎠⎞ᵐᵘʰᵃʰᵃ
-</span>
+                    ⎛⎝( ` ᢍ ´ )⎠⎞ᵐᵘʰᵃʰᵃ
+                </span>
 
                 <span style="position:absolute;top:8%;left:76%;color:#8696a0;opacity:0.18;font-size:28px;white-space:nowrap;">
-    (๑ↀᆺↀ๑)
-</span>
-
+                    (๑ↀᆺↀ๑)
+                </span>
 
                 <span style="position:absolute;top:22%;left:68%;color:#8696a0;opacity:0.18;font-size:25px;white-space:nowrap;">
-    ✧･ﾟ: *✧･ﾟ:*
-</span>
+                    ✧･ﾟ: *✧･ﾟ:*
+                </span>
 
                 <span style="position:absolute;top:29%;left:20%;color:#8696a0;opacity:0.18;font-size:26px;white-space:nowrap;">
-    ୧⍤⃝💐
-</span>
+                    ୧⍤⃝💐
+                </span>
 
                 <span style="position:absolute;top:32%;left:78%;color:#8696a0;opacity:0.18;font-size:22px;white-space:nowrap;">
-    ˗ˏˋ ꒰ ✉︎ ꒱ ˎˊ˗
-</span>
-
+                    ˗ˏˋ ꒰ ✉︎ ꒱ ˎˊ˗
+                </span>
 
                 <span style="position:absolute;top:40%;left:43%;color:#8696a0;opacity:0.18;font-size:24px;white-space:nowrap;">
-    ｡ﾟ•┈୨♡୧┈•ﾟ｡
-</span>
+                    ｡ﾟ•┈୨♡୧┈•ﾟ｡
+                </span>
 
                 <span style="position:absolute;top:48%;left:70%;color:#8696a0;opacity:0.18;font-size:23px;white-space:nowrap;">
-    ♥️⃢🥰⃢♥️⃢♥️⃢𓍯
-</span>
+                    ♥️⃢🥰⃢♥️⃢♥️⃢𓍯
+                </span>
 
                 <span style="position:absolute;top:50%;left:10%;color:#8696a0;opacity:0.18;font-size:24px;white-space:nowrap;">
-    ִֶָ. ..𓂃 ࣪ ִֶָ🪽་༘࿐
-</span>
-
+                    ִֶָ. ..𓂃 ࣪ ִֶָ🪽་༘࿐
+                </span>
 
                 <span style="position:absolute;top:61%;left:31%;color:#8696a0;opacity:0.18;font-size:23px;white-space:nowrap;">
-    ✩♬ ₊.🎧⋆☾⋆⁺₊✧
-</span>
+                    ✩♬ ₊.🎧⋆☾⋆⁺₊✧
+                </span>
 
                 <span style="position:absolute;top:68%;left:76%;color:#8696a0;opacity:0.18;font-size:17px;white-space:nowrap;">
-    𓂃˖˳·˖ ִֶָ ⋆🌷͙⋆ ִֶָ˖·˳˖𓂃 ִֶָ
-</span>
-
+                    𓂃˖˳·˖ ִֶָ ⋆🌷͙⋆ ִֶָ˖·˳˖𓂃 ִֶָ
+                </span>
 
                 <span style="position:absolute;top:72%;left:50%;color:#8696a0;opacity:0.18;font-size:23px;white-space:nowrap;">
-    ⋆｡𖦹°⭒˚｡⋆⋆｡𖦹°⭒˚｡⋆
-</span>
+                    ⋆｡𖦹°⭒˚｡⋆⋆｡𖦹°⭒˚｡⋆
+                </span>
 
                 <span style="position:absolute;top:76%;left:14%;color:#8696a0;opacity:0.18;font-size:21px;white-space:nowrap;">
-    ִֶָ𓂃 ࣪ ִֶָ🦢་༘࿐
-</span>
+                    ִֶָ𓂃 ࣪ ִֶָ🦢་༘࿐
+                </span>
 
                 <span style="position:absolute;top:84%;left:38%;color:#8696a0;opacity:0.18;font-size:18px;white-space:nowrap;">
-    ⊹₊˚‧︵‿₊୨ᰔ୧₊‿︵‧˚₊⊹
-</span>
-
+                    ⊹₊˚‧︵‿₊୨ᰔ୧₊‿︵‧˚₊⊹
+                </span>
 
                 <span style="position:absolute;top:88%;left:72%;color:#8696a0;opacity:0.18;font-size:19px;white-space:nowrap;">
-    ༘⋆♡⸝⸝💌⊹。°˖➴
-</span>
+                    ༘⋆♡⸝⸝💌⊹。°˖➴
+                </span>
 
                 <span style="position:absolute;top:91%;left:8%;color:#8696a0;opacity:0.18;font-size:18px;white-space:nowrap;">
-    ⊹ ࣪ ﹏𓊝﹏𓂁﹏⊹ ࣪ ˖
-</span>
+                    ⊹ ࣪ ﹏𓊝﹏𓂁﹏⊹ ࣪ ˖
+                </span>
 
             </div>
 
-            <div id="messages-container"
+            <div id="chat-window"
                  style="
-             position:relative;
-             z-index:1;
-             width:100%;
-             display:flex;
-             flex-direction:column;
-             gap:10px;
-             margin-top:auto;
-             flex-shrink:0;
-         ">
+                     width:100%;
+                     height:100%;
+                     box-sizing:border-box;
+                     padding:20px;
+                     overflow-y:auto;
+                     display:flex;
+                     flex-direction:column;
+                     position:relative;
+                     z-index:1;
+                 ">
+
+                <div id="messages-container"
+                     style="
+                         position:relative;
+                         z-index:1;
+                         width:100%;
+                         display:flex;
+                         flex-direction:column;
+                         gap:10px;
+                         margin-top:auto;
+                         flex-shrink:0;
+                     ">
+                </div>
+
             </div>
 
         </div>
 
-        <div style="
+        <div id="message-composer" style="
             min-height:60px;
             background:#202c33;
             padding:10px 15px;
@@ -620,7 +665,6 @@
     const messageInput = document.getElementById('message-input');
     const sendButton = document.getElementById('send-btn');
 
-
     client.onConnect = function () {
 
         console.log('WebSocket connected');
@@ -642,19 +686,23 @@
 
     };
 
-
     client.onStompError = function (frame) {
 
         console.error('STOMP error:', frame);
 
     };
 
-
     client.activate();
 
+    function toggleChatList() {
+
+        const chatList = document.getElementById('chat-list');
+
+        chatList.classList.toggle('mobile-open');
+
+    }
 
     sendButton.addEventListener('click', sendMessage);
-
 
     messageInput.addEventListener('keydown', function (event) {
 
@@ -667,7 +715,6 @@
         }
 
     });
-
 
     function sendMessage() {
 
@@ -691,7 +738,6 @@
 
     }
 
-
     function addMessage(senderId, senderName, text, createdAt) {
 
         console.log(
@@ -701,7 +747,6 @@
             currentUserId
         );
 
-
         const isMyMessage =
             senderId !== null &&
             senderId !== undefined &&
@@ -709,9 +754,7 @@
             currentUserId !== undefined &&
             Number(senderId) === Number(currentUserId);
 
-
         const message = document.createElement('div');
-
 
         message.style.maxWidth = '65%';
         message.style.padding = '8px 12px';
@@ -721,7 +764,6 @@
         message.style.lineHeight = '1.4';
         message.style.wordBreak = 'break-word';
         message.style.flexShrink = '0';
-
 
         if (isMyMessage) {
 
@@ -737,13 +779,11 @@
 
         }
 
-
         const textElement = document.createElement('div');
 
         textElement.textContent = text;
 
         message.appendChild(textElement);
-
 
         const timeElement = document.createElement('span');
 
@@ -753,35 +793,34 @@
         timeElement.style.marginTop = '4px';
         timeElement.style.display = 'block';
 
-
         if (createdAt) {
 
             const date = new Date(createdAt);
 
             if (!isNaN(date.getTime())) {
+
                 timeElement.textContent = date.toLocaleTimeString('uk-UA', {
                     timeZone: 'Europe/Kyiv',
                     hour: '2-digit',
                     minute: '2-digit',
                     hour12: false
                 });
+
             } else {
+
                 timeElement.textContent = createdAt;
+
             }
 
         }
 
-
         message.appendChild(timeElement);
 
-
         messagesContainer.appendChild(message);
-
 
         chatWindow.scrollTop = chatWindow.scrollHeight;
 
     }
-
 
     function loadMessages() {
 
@@ -809,7 +848,6 @@
                     messages
                 );
 
-
                 messages.forEach(message => {
 
                     addMessage(
@@ -820,7 +858,6 @@
                     );
 
                 });
-
 
                 chatWindow.scrollTop =
                     chatWindow.scrollHeight;
@@ -837,7 +874,6 @@
             });
 
     }
-
 
     loadMessages();
 
