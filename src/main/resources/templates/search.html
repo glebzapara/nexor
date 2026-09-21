@@ -121,36 +121,64 @@
     flex:1;
     display:flex;
     align-items:center;
-    justify-content:space-between;
-    gap:10px;
+    gap:20px;
 ">
 
                 <div style="
-                width:45px;
-                height:45px;
-                border-radius:50%;
-                background:#2a3942;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                color:#00a884;
-                font-size:18px;
-                font-weight:bold;
-                flex-shrink:0;
-            ">
+        width:45px;
+        height:45px;
+        border-radius:50%;
+        background:#2a3942;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:#00a884;
+        font-size:18px;
+        font-weight:bold;
+        flex-shrink:0;
+    ">
                     <span th:text="${#strings.substring(user.firstName, 0, 1).toUpperCase()}"></span>
                 </div>
 
                 <div style="
-        font-size:16px;
-        font-weight:600;
-        margin:0;
-        overflow:hidden;
-        text-overflow:ellipsis;
-        white-space:nowrap;
-    "
-                     th:text="${user.userName}">
-                    username
+        flex:1;
+        min-width:0;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:30px;
+    ">
+
+                    <div style="
+        color:#5f737d;
+        font-size:18px;
+        font-weight:normal;
+    ">
+                        |
+                    </div>
+
+                    <div style="
+            font-size:16px;
+            font-weight:600;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+        "
+                         th:text="${user.firstName + ' ' + user.lastName}">
+                    </div>
+
+                    <div style="
+            font-size:16px;
+            font-weight:600;
+            color:#8696a0;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+        "
+                         th:text="${user.userName}">
+                        username
+                    </div>
+
                 </div>
 
                 <div style="
@@ -199,6 +227,7 @@
                 </div>
 
             </div>
+
 
         </div>
 

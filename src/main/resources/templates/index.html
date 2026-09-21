@@ -5,6 +5,59 @@
     <meta charset="UTF-8">
     <title>Nexor</title>
     <link rel="icon" href="/images/favicon.ico">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Nexor</title>
+        <link rel="icon" href="/images/favicon.ico">
+
+        <style>
+            @media (max-width: 700px) {
+
+                nav {
+                    padding: 10px !important;
+                }
+
+                nav + div > div:first-child {
+                    display: none !important;
+                }
+
+                nav + div > div:last-child {
+                    width: 100%;
+                }
+
+                nav + div > div:last-child > div:first-child {
+                    padding: 0 12px !important;
+                }
+
+                #chat-window {
+                    padding: 10px !important;
+                }
+
+                #chat-window + div {
+                    padding: 8px !important;
+                    gap: 6px !important;
+                }
+
+                #chat-window + div > div:first-child {
+                    gap: 4px !important;
+                }
+
+                #chat-window + div > div:first-child button {
+                    padding: 5px 7px !important;
+                }
+
+                #message-input {
+                    min-width: 0 !important;
+                    padding: 9px 10px !important;
+                }
+
+                #messages-container > div {
+                    max-width: 80% !important;
+                }
+            }
+        </style>
+    </head>
 </head>
 
 <body style="
