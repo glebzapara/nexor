@@ -61,6 +61,14 @@
                 padding:0 !important;
             }
 
+            #mobile-search-btn {
+                display:flex !important;
+            }
+
+            #mobile-search-row.mobile-search-open {
+                display:block !important;
+            }
+
             #chat-window {
                 padding:10px !important;
             }
@@ -417,7 +425,7 @@
                  th:text="${currentChat.name.charAt(0)}">
             </div>
 
-            <div style="min-width:0;">
+            <div style="min-width:0; flex:1;">
                 <div style="
                     font-weight:600;
                     font-size:17px;
@@ -436,6 +444,80 @@
                 </div>
             </div>
 
+            <button id="mobile-search-btn"
+                    type="button"
+                    onclick="toggleMobileSearch()"
+                    style="
+                        display:none;
+                        width:40px;
+                        height:40px;
+                        flex-shrink:0;
+                        border:none;
+                        border-radius:8px;
+                        background:#2a3942;
+                        color:#00a884;
+                        font-size:19px;
+                        align-items:center;
+                        justify-content:center;
+                        cursor:pointer;
+                        padding:0;
+                    ">
+                🔍
+            </button>
+
+        </div>
+
+        <div id="mobile-search-row" style="
+            display:none;
+            background:#202c33;
+            padding:8px 12px;
+            border-top:1px solid #222e35;
+            border-bottom:1px solid #222e35;
+            box-sizing:border-box;
+        ">
+            <form th:action="@{/users/search}" method="post" style="
+                display:flex;
+                width:100%;
+                gap:8px;
+                margin:0;
+            ">
+                <input id="mobile-search-input"
+                       type="text"
+                       name="searchTerm"
+                       placeholder="Search"
+                       autocomplete="off"
+                       style="
+                           flex:1;
+                           min-width:0;
+                           height:40px;
+                           background:#2a3942;
+                           border:1px solid #3b4a54;
+                           border-radius:8px;
+                           padding:0 12px;
+                           color:#e9edef;
+                           font-size:15px;
+                           outline:none;
+                           box-sizing:border-box;
+                       ">
+
+                <button type="submit" style="
+                    width:40px;
+                    height:40px;
+                    flex-shrink:0;
+                    background:#00a884;
+                    color:#111b21;
+                    border:none;
+                    border-radius:8px;
+                    cursor:pointer;
+                    font-size:18px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    padding:0;
+                ">
+                    🔍
+                </button>
+            </form>
         </div>
 
         <div style="
@@ -703,6 +785,20 @@
 
         chatList.classList.toggle('mobile-open');
 
+    }
+
+    function toggleMobileSearch() {
+
+        const searchRow = document.getElementById('mobile-search-row');
+        const searchInput = document.getElementById('mobile-search-input');
+
+        searchRow.classList.toggle('mobile-search-open');
+
+        if (searchRow.classList.contains('mobile-search-open')) {
+            setTimeout(function () {
+                searchInput.focus();
+            }, 50);
+        }
     }
 
     sendButton.addEventListener('click', sendMessage);

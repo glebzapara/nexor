@@ -83,6 +83,27 @@
             }
         }
     </style>
+
+    <style>
+        @media (max-width: 700px) {
+            .mobile-search-cell {
+                display:table-cell !important;
+                width:1% !important;
+                white-space:nowrap !important;
+            }
+
+            #mobile-index-search-btn {
+                display:inline-flex !important;
+                align-items:center !important;
+                justify-content:center !important;
+            }
+
+            #mobile-index-search-row.mobile-search-open {
+                display:block !important;
+            }
+        }
+    </style>
+
 </head>
 
 <body style="
@@ -273,6 +294,31 @@
         </tr>
     </table>
 
+    <td align="right" class="mobile-search-cell">
+        <button id="mobile-index-search-btn"
+                type="button"
+                onclick="toggleIndexSearch()"
+                aria-label="Search"
+                style="
+                            display:none;
+                            width:40px;
+                            height:40px;
+                            border:none;
+                            border-radius:8px;
+                            background:#2a3942;
+                            color:#00a884;
+                            font-size:19px;
+                            cursor:pointer;
+                            align-items:center;
+                            justify-content:center;
+                            padding:0;
+                        ">
+            🔍
+        </button>
+    </td>
+
+    </tr>
+    </table>
 </nav>
 
 
@@ -796,6 +842,22 @@
         chatWindow.scrollTop = chatWindow.scrollHeight;
     }
 
+</script>
+
+
+<script>
+    function toggleIndexSearch() {
+        const searchRow = document.getElementById('mobile-index-search-row');
+        const searchInput = document.getElementById('mobile-index-search-input');
+
+        searchRow.classList.toggle('mobile-search-open');
+
+        if (searchRow.classList.contains('mobile-search-open')) {
+            setTimeout(function () {
+                searchInput.focus();
+            }, 50);
+        }
+    }
 </script>
 
 </body>
