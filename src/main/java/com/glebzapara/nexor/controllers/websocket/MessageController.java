@@ -8,6 +8,8 @@ import com.glebzapara.nexor.models.User;
 import com.glebzapara.nexor.repositories.ChatRepository;
 import com.glebzapara.nexor.repositories.MessageRepository;
 import com.glebzapara.nexor.repositories.UserRepository;
+import com.glebzapara.nexor.dto.ChatMessageEvent;
+import com.glebzapara.nexor.services.ChatMessageProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -29,9 +31,10 @@ public class MessageController {
     private final ChatRepository chatRepository;
     private final UserRepository userRepository;
 
+    private final ChatMessageProducer chatMessageProducer;
+
     @MessageMapping("/chat/{id}")
-    @SendTo("/topic/chat/{id}")
-    public MessageResponse sendMessage(
+    public void sendMessage(
             @DestinationVariable Integer id,
             MessageRequest request,
             Principal principal) {
@@ -43,7 +46,6 @@ public class MessageController {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         Message message = new Message();
-
         message.setText(request.getText());
         message.setChat(chat);
         message.setSender(user);
@@ -51,13 +53,15 @@ public class MessageController {
 
         messageRepository.save(message);
 
-        return new MessageResponse(
+        MessageResponse response = new MessageResponse(
                 message.getId(),
                 message.getText(),
                 user.getId(),
                 user.getFirstName(),
                 message.getCreatedAt()
         );
+
+        chatMessageProducer.send(new ChatMessageEvent(id, response));
     }
 
     @ResponseBody
